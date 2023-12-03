@@ -1,0 +1,21 @@
+OBSERVAÇÕES SOBRE O PROJETO:
+
+
+1- Esse projeto foi desenvolvido no Visual Code 2022, então ele precisa ser executado nessa mesma versão de IDE;
+
+
+2-Antes de executa-lo é necessário:
+
+Ir no arquivo appsettings.json e realizar as seguintes alterações:
+ *Mudar o servidor em Server=nome_do_seu_servidor;
+ *Mudar o nome do banco de dados em Database=nome_do_banco (opcional);
+
+Após isso, no Menu Superior é necessário ir na Guia "Ferramentas" e escolher a opção:
+Gerenciador de Pacotes do NuGet > Console do Gerenciado de Pacotes
+
+Isso irá abrir o terminal do NuGet, onde é necessário digitar o comando: update-database
+
+Com isso será criado o banco de dados no SQL Server, e assim será possível obter 100% do sistema.
+
+
+3-No sistema, há apenas uma observação para seu uso. Para cadastrar um Mangá é necessário primeiro cadastrar o gênero e o autor em suas respectivas guias, assim será possível cadastar o Mangá também.

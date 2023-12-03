@@ -1,0 +1,114 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Privacidade";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
+    <link rel="icon" type="image/x-icon" href="/imagens/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacidade</title>
+    <style>
+        .centered {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .text-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: justify;
+        }
+
+        .left-image {
+            float: left;
+            margin-right: 20px;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: #000;
+        }
+
+        img {
+            margin-top: 10px;
+        }
+
+        .btn-custom {
+            background-color: #ccc;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .btn-custom:hover {
+                background-color: #999;
+            }
+
+        .border-top {
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .box-shadow {
+            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+        }
+
+        button.accept-policy {
+            font-size: 1rem;
+            line-height: inherit;
+        }
+
+        p {
+            margin-left: 20px;
+            margin-right: 20px; 
+        }
+
+        .footer {
+            position: relative;
+            margin-top: 45px;
+            bottom: 0;
+            width: 100%;
+            white-space: nowrap;
+            line-height: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align:center;">@ViewData["Title"]</h1>
+    <div style="flex:2;">
+        <p class="text-container">Aqui falamos sério sobre um tópico, proteção de dados. Temos os seguintes compromissos:</p>
+
+        <br>
+        <h3 class="text-container">1. Dados que Coletamos</h3>
+        <p class="text-container">Assim como nossos personagens favoritos têm segredos, também mantemos alguns dados, mas apenas o estritamente necessário para aprimorar sua experiência. Coletamos informações básicas, como seu nome e endereço de e-mail, para garantir que você receba as últimas novidades e ofertas.</p>
+        <br>
+        <h3 class="text-container">2. Cookies</h3>
+        <p class="text-container">Sim, nós usamos cookies, mas não os comestíveis! Os cookies do nosso site ajudam a personalizar sua jornada e a melhorar a navegação. Eles não revelam seus segredos ou preferências pessoais.</p>
+        <br>
+        <h3 class="text-container">3. Proteção de Dados</h3>
+        <p class="text-container">Assim como um mago protege seu grimório, nós levamos a segurança de seus dados a sério. Utilizamos medidas de segurança avançadas para garantir que suas informações estejam a salvo de olhos curiosos.</p>
+        <br>
+        <h3 class="text-container">4. Não Revelamos Identidades Secretas</h3>
+        <p class="text-container">Sua privacidade é uma das coisas mais importantes para nós. Nunca compartilharemos seus dados com terceiros para fins de marketing ou outras atividades sinistras. Suas informações estão seguras conosco.</p>
+        <br>
+        <h3 class="text-container">5. Você Controla</h3>
+        <p class="text-container">Você é o mestre da sua própria história. Se desejar, pode optar por não receber nossas mensagens ou excluir seus dados a qualquer momento. Estamos aqui para tornar sua jornada o mais agradável possível.</p>
+        <br>
+        <strong><p class="text-container">Lembre-se de que esta é uma política de privacidade com um toque de humor, mas os princípios de privacidade são levados a sério. Aqui, na nossa loja de mangás, respeitamos sua privacidade. Seja bem-vindo e divirta-se!</p></strong>
+
+    </div>
+</body>
+</html>
