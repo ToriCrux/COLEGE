@@ -1,0 +1,100 @@
+﻿@page
+@model LojaDeMangas.Pages.Assuntos.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Listagem Gêneros Mangá";
+}
+
+<head>
+    <link rel="icon" type="image/x-icon" href="/imagens/favicon.ico" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
+    <style>
+        .centered {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .btn-primary {
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 10px;
+            color: #000;
+            border-radius: 10px;
+            border-color: #808F87;
+            background-color: #808F87;
+        }
+
+            .btn-primary:hover,
+            .btn-primary:focus {
+                background-color: #606C66;
+                border-color: #808F87;
+            }
+
+        .btn-success {
+            color: #000;
+            border-radius: 10px;
+            border-color: #309C7C;
+            background-color: #309C7C;
+        }
+
+            .btn-success:hover,
+            .btn-success:focus {
+                background-color: #226D57;
+                border-color: #226D57;
+            }
+
+        .btn-danger {
+            color: #000;
+            border-radius: 10px;
+            border-color: #B72A3F;
+            background-color: #B72A3F;
+        }
+
+            .btn-danger:hover,
+            .btn-danger:focus {
+                background-color: #962233;
+                border-color: #962233;
+            }
+
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            white-space: nowrap;
+            line-height: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 class="centered">Listagem de Gêneros de Mangá</h2>
+
+    <p><a asp-page="./Create" class="btn btn-primary">Adicionar Novo Gênero de Mangá</a></p>
+
+    <table class="table  table-hover">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Gênero</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var autor in Model.Assuntos)
+            {
+                <tr>
+                    <td>@autor.CodAs</td>
+                    <td>@autor.Descricao</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@autor.CodAs" class="btn btn-success btn-rounded">Editar</a> |
+                        <a asp-page="./Delete" asp-route-id="@autor.CodAs" class="btn btn-danger btn-rounded">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

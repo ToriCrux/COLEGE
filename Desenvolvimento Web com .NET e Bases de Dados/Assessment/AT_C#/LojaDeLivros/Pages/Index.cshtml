@@ -1,0 +1,107 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="icon" type="image/x-icon" href="/imagens/favicon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <style>
+        .footer {
+            position: relative;
+            margin-top: 45px;
+            bottom: 0;
+            width: 100%;
+            white-space: nowrap;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        .centered {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .text-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: justify;
+        }
+
+        .left-image {
+            float: left;
+            margin-right: 20px;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: #000;
+        }
+
+        img {
+            margin-top: 10px;
+        }
+
+        .btn-custom {
+            background-color: #ccc;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .btn-custom:hover {
+                background-color: #999;
+            }
+
+        .border-top {
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .box-shadow {
+            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+        }
+    </style>
+</head>
+<body>
+    <img src="/imagens/first_image.png" class="centered" />
+
+    <div class="text-container" style="display: flex; justify-content: space-between;">
+        <div style="flex: 1;">
+            <div class="left-image">
+                <img src="/imagens/second_image.png" class="left">
+                <img src="/imagens/third_image.png" class="left">
+            </div>
+        </div>
+        <div style="flex: 2;">
+            <h2>Bem-vindo à loja, onde as histórias se tornam realidade em cada página virada.</h2>
+            <p>Olá, amigos otakus, geeks e amantes de mangás! Prepare-se para embarcar em uma jornada incrível pelo mundo dos quadrinhos japoneses, porque nós somos a loja que traz alegria, aventura e muito gore para sua vida há mais de 7 anos no Brasil.</p>
+            <br>
+            <h2>Nossa História</h2>
+            <p>Há sete anos, começamos essa jornada com a missão de levar as melhores histórias em quadrinhos diretamente para sua prateleira. Ao longo dos anos, nossa loja se tornou o lar de mangás de todos os gêneros e para todas as idades. Desde as batalhas épicas nos shounen, a kodomos para os menores e seinen ou josei, nossa seleção é feita sob medida para cada tipo de leitor com a intenção de atender a todos os gêneros.</p>
+            <br>
+            <h2>O que nos torna únicos</h2>
+            <p>Nós não somos apenas uma loja, somos uma comunidade apaixonada que também compartilha a mesma paixão por mangás. Nossa equipe está repleta de fãs dedicados que estão sempre prontos para ajudar a encontrar a próxima grande história ou discutir o último capítulo de seu mangá favorito. Além disso, organizamos eventos divertidos, promoções exclusivas e até mesmo um clube do livro onde todos são bem-vindos.</p>
+            <br>
+            <h2>Por que amamos o que fazemos</h2>
+            <p>Aqui, acreditamos que a leitura de mangás é uma experiência que transcende o mero conceito de leitura. Não importa se você tem 7, 17 ou 70 anos, os mangás têm o poder de nos transportar para mundos imaginários, nos fazer rir, chorar e, acima de tudo, nos conectar. É essa paixão que nos empulsiona todos os dias e molda nossas personalidades e caráter.</p>
+            <br>
+            <h2>Prepare-se </h2>
+            <p>Venha fazer parte da nossa história, descobrir novos personagens incríveis, rir das situações mais engraçadas e emocionar-se com as narrativas mais cativantes. A nossa aventura pelos mangás está apenas começando, e mal podemos esperar para compartilhá-la com você!</p>
+        </div>
+    </div>
+
+</body>
+</html>

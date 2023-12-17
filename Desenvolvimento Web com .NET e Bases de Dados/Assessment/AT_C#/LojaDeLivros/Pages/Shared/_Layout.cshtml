@@ -1,0 +1,111 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Loja Manga</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LojaDeMangas.styles.css" asp-append-version="true" />
+    <link rel="icon" type="image/x-icon" href="/imagens/favicon.ico" />
+    <script src="~/js/validacao.js"></script>
+</head>
+<body>
+    <header>
+        <h1 id="welcomeMessage">Olá, [Username]!</h1>
+
+        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+        @{
+            var usuarioLogado = Context.Request.Cookies["UsuarioLogado"];
+        }
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="/imagens/favicon.ico" width="40" height="40" alt="Nome Alternativo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacidade</a>
+                        </li>
+
+                         @{
+                            if (!string.IsNullOrEmpty(usuarioLogado))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Autores/Index">Autores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Assuntos/Index">Assuntos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Mangas/Index">Mangas</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <span class="nav-link text-muted">Autores</span>
+                                <span class="nav-link text-muted">Assuntos</span>
+                                <span class="nav-link text-muted">Mangas</span>
+
+                            }
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Usuarios/Login">Login</a>
+                        </li>
+                     
+                        @{
+                            if (!string.IsNullOrEmpty(usuarioLogado))
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Usuarios/Logout">Logout</a>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - LojaDeMangas - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        var usuarioLogado = document.cookie.replace(/(?:(?:^|.*;\s*)UsuarioLogado\s*=\s*([^;]*).*$)|^.*$/, "$1");
+
+        if (usuarioLogado) {
+
+            document.getElementById("welcomeMessage").innerText = "Olá, " + usuarioLogado + "!";
+        }
+        else {
+            document.getElementById("welcomeMessage").innerText = "";
+        }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
