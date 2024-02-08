@@ -1,0 +1,1 @@
+Nesse repositório será anexado os arquivos referentes aos exercícios do Teste de Performance 1 da matéria de Programação com Python.
