@@ -1,0 +1,165 @@
+@startuml
+title Biblioteca Refatorada - Class Diagram (GoF)
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype polyline
+
+' =======================
+' PACOTES
+' =======================
+package "org.example.biblioteca" {
+  interface ItemMidiateca {
+    +getId(): String
+    +getTitulo(): String
+  }
+
+  class ObraLiteraria {
+    -id: String
+    -titulo: String
+    -autor: String
+    +getId(): String
+    +getTitulo(): String
+    +getAutor(): String
+  }
+
+  class FilmeMidiateca {
+    -id: String
+    -titulo: String
+    -diretor: String
+    -genero: String
+    +getId(): String
+    +getTitulo(): String
+    +getDiretor(): String
+    +getGenero(): String
+  }
+
+  class Participante {
+    -id: String
+    -nome: String
+    +getId(): String
+    +getNome(): String
+  }
+
+  class EmprestimoMidiateca {
+    -item: ItemMidiateca
+    -participante: Participante
+    -dataEmprestimo: LocalDate
+    -dataDevolucaoPrevista: LocalDate
+    +getItem(): ItemMidiateca
+    +getParticipante(): Participante
+    +estaVencido(): boolean
+  }
+
+  class GerenciadorCentral <<Singleton>> {
+    -itens: Map<String, ItemMidiateca>
+    -participantes: Map<String, Participante>
+    -emprestimos: List<EmprestimoMidiateca>
+    -observadores: List<Observador>
+    -estrategiaBusca: EstrategiaBusca
+    {static}+getInstancia(): GerenciadorCentral
+    +adicionarItem(item: ItemMidiateca)
+    +removerItem(id: String)
+    +registrarParticipante(p: Participante)
+    +removerParticipante(id: String)
+    +emprestarItem(idItem: String, idParticipante: String, data: LocalDate): EmprestimoMidiateca
+    +devolverItem(idItem: String, idParticipante: String): boolean
+    +definirEstrategiaBusca(e: EstrategiaBusca)
+    +buscarItens(termo: String): List<ItemMidiateca>
+    +adicionarObservador(o: Observador)
+    +removerObservador(o: Observador)
+    +checarVencidosENotificar(): List<EmprestimoMidiateca>
+  }
+}
+
+package "org.example.factory" {
+  abstract class CriadorItem <<FactoryMethod>> {
+    +criarItem(tipo: String, dados: Map<String,String>): ItemMidiateca
+  }
+
+  class FabricaItemConcreta {
+  }
+}
+
+package "org.example.facade" {
+  class GestorBibliotecaFacade <<Facade>> {
+    -gc: GerenciadorCentral
+    -fabrica: CriadorItem
+    +cadastrarParticipante(id: String, nome: String)
+    +cadastrarLivro(id: String, titulo: String, autor: String): ItemMidiateca
+    +cadastrarFilme(id: String, titulo: String, diretor: String, genero: String): ItemMidiateca
+    +emprestar(idItem: String, idParticipante: String, data: LocalDate): EmprestimoMidiateca
+    +devolver(idItem: String, idParticipante: String): boolean
+    +core(): GerenciadorCentral
+  }
+}
+
+package "org.example.observer" {
+  interface Observador <<Observer>> {
+    +notificar(e: EmprestimoMidiateca)
+  }
+
+  class NotificadorAdmin {
+    +notificar(e: EmprestimoMidiateca)
+  }
+
+  class NotificadorParticipante {
+    +notificar(e: EmprestimoMidiateca)
+  }
+}
+
+package "org.example.strategy" {
+  interface EstrategiaBusca <<Strategy>> {
+    +buscar(itens: List<ItemMidiateca>, termo: String): List<ItemMidiateca>
+  }
+
+  class BuscaPorTitulo {
+    +buscar(...): List<ItemMidiateca>
+  }
+
+  class BuscaPorAutor {
+    +buscar(...): List<ItemMidiateca>
+  }
+}
+
+
+' HERANÇAS / IMPLEMENTAÇÕES
+ItemMidiateca <|.. ObraLiteraria
+ItemMidiateca <|.. FilmeMidiateca
+
+CriadorItem <|-- FabricaItemConcreta
+EstrategiaBusca <|.. BuscaPorTitulo
+EstrategiaBusca <|.. BuscaPorAutor
+Observador <|.. NotificadorAdmin
+Observador <|.. NotificadorParticipante
+
+
+' ASSOCIAÇÕES
+EmprestimoMidiateca --> ItemMidiateca : item
+EmprestimoMidiateca --> Participante : participante
+
+GestorBibliotecaFacade --> GerenciadorCentral : usa
+GestorBibliotecaFacade --> CriadorItem : usa (Factory)
+
+GerenciadorCentral --> "0..*" ItemMidiateca : gerencia
+GerenciadorCentral --> "0..*" Participante : gerencia
+GerenciadorCentral --> "0..*" EmprestimoMidiateca : gerencia
+GerenciadorCentral --> EstrategiaBusca : define
+GerenciadorCentral --> "0..*" Observador : notifica
+
+' Apenas para legibilidade visual
+' (opcional) notas indicando os objetivos do trabalho
+note right of GerenciadorCentral
+  - Instância única compartilhada (Singleton)
+  - Orquestra regras do domínio
+  - Mantém Strategy e Observers
+end note
+
+note bottom of GestorBibliotecaFacade
+  Camada de entrada mais simples:
+  cadastra itens/usuários, empresta/devolve,
+  sem expor complexidade interna.
+end note
+
+@enduml

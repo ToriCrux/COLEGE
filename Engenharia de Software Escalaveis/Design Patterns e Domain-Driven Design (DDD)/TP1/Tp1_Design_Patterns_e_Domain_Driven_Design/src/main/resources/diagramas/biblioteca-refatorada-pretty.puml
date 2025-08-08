@@ -1,0 +1,176 @@
+@startuml
+' ======= TEMA / ESTILO =======
+hide circle
+skinparam shadowing false
+skinparam linetype ortho
+skinparam dpi 160
+left to right direction
+
+skinparam packageStyle rectangle
+skinparam package {
+  BackgroundColor #F9FAFB
+  BorderColor #CBD5E1
+}
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #94A3B8
+  ArrowColor #64748B
+}
+skinparam stereotype {
+  CBackgroundColor #EEF2FF
+  CBorderColor #6366F1
+  CFontColor #3730A3
+  IBackgroundColor #ECFEFF
+  IBorderColor #06B6D4
+  IFontColor #0E7490
+}
+skinparam note {
+  BackgroundColor #FFFBEB
+  BorderColor #F59E0B
+}
+
+' Ícones nos estereótipos (só decorativo)
+' C = class, I = interface (cores já setadas acima)
+
+title <size:16><b>Biblioteca Refatorada — Class Diagram (GoF)</b></size>\n<size:12>Singleton · Facade · Factory Method · Strategy · Observer</size>
+
+' PACOTES
+package "org.example.facade" as pkgFacade {
+  class GestorBibliotecaFacade <<Facade>> {
+    +cadastrarParticipante(...)
+    +cadastrarLivro(...)
+    +cadastrarFilme(...)
+    +emprestar(...)
+    +devolver(...)
+    +core(): GerenciadorCentral
+  }
+}
+
+package "org.example.biblioteca" as pkgCore {
+  class GerenciadorCentral <<Singleton>> {
+    - itens
+    - participantes
+    - emprestimos
+    - observadores
+    - estrategiaBusca
+    --
+    +getInstancia()
+    +adicionarItem(...)
+    +registrarParticipante(...)
+    +emprestarItem(...)
+    +devolverItem(...)
+    +definirEstrategiaBusca(...)
+    +buscarItens(...)
+    +adicionarObservador(...)
+    +checarVencidosENotificar()
+  }
+
+  class EmprestimoMidiateca {
+    - item: ItemMidiateca
+    - participante: Participante
+    - dataEmprestimo
+    - dataDevolucaoPrevista
+    --
+    +estaVencido(): boolean
+  }
+
+  interface ItemMidiateca <<interface>> {
+    +getId()
+    +getTitulo()
+  }
+
+  class ObraLiteraria {
+    - id
+    - titulo
+    - autor
+  }
+
+  class FilmeMidiateca {
+    - id
+    - titulo
+    - diretor
+    - genero
+  }
+
+  class Participante {
+    - id
+    - nome
+  }
+}
+
+package "org.example.factory" as pkgFactory {
+  abstract class CriadorItem <<FactoryMethod>> {
+    +criarItem(tipo, dados): ItemMidiateca
+  }
+  class FabricaItemConcreta
+}
+
+package "org.example.strategy" as pkgStrategy {
+  interface EstrategiaBusca <<Strategy>> {
+    +buscar(itens, termo): List
+  }
+  class BuscaPorTitulo
+  class BuscaPorAutor
+}
+
+package "org.example.observer" as pkgObserver {
+  interface Observador <<Observer>> {
+    +notificar(emprestimo)
+  }
+  class NotificadorAdmin
+  class NotificadorParticipante
+}
+
+' RELAÇÕES
+' Facade usa core e fábrica
+GestorBibliotecaFacade --> GerenciadorCentral : usa
+GestorBibliotecaFacade --> CriadorItem : usa (Factory)
+
+' Factory
+CriadorItem <|-- FabricaItemConcreta
+
+' Core
+GerenciadorCentral --> "0..*" ItemMidiateca : gerencia
+GerenciadorCentral --> "0..*" Participante : gerencia
+GerenciadorCentral --> "0..*" EmprestimoMidiateca : controla
+GerenciadorCentral --> EstrategiaBusca : define
+GerenciadorCentral --> "0..*" Observador : notifica
+
+' Empréstimo
+EmprestimoMidiateca --> ItemMidiateca : item
+EmprestimoMidiateca --> Participante : participante
+
+' Itens
+ItemMidiateca <|.. ObraLiteraria
+ItemMidiateca <|.. FilmeMidiateca
+
+' Strategy
+EstrategiaBusca <|.. BuscaPorTitulo
+EstrategiaBusca <|.. BuscaPorAutor
+
+' Observer
+Observador <|.. NotificadorAdmin
+Observador <|.. NotificadorParticipante
+
+'  NOTAS
+note right of GerenciadorCentral
+<b>Singleton</b>
+— Instância única compartilhada
+— Orquestra regras do domínio
+— Mantém Strategy e Observers
+end note
+
+note right of GestorBibliotecaFacade
+<b>Facade</b>
+— Entrada simplificada
+— Cadastro, empréstimo, devolução
+— Esconde complexidade interna
+end note
+
+legend left
+<b>Legenda</b>
+<i>Facades/Factories</i> ao topo; Núcleo ao centro; Strategies/Observers abaixo.
+Sólido = associação/herança.
+Estereótipos indicam os padrões GoF.
+end legend
+@enduml
