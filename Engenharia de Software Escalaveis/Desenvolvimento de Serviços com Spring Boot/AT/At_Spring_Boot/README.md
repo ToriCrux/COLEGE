@@ -1,3 +1,5 @@
+![Build](https://github.com/ToriCrux/COLEGE/actions/workflows/build-at-spring-boot.yml/badge.svg)
+
 # API Acadêmica
 
 Este projeto é uma API construída como parte de um assessment da faculdade, utilizando Spring Boot.
