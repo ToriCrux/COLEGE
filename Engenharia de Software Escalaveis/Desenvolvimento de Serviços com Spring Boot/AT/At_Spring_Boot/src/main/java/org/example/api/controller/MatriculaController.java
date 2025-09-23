@@ -39,4 +39,19 @@ public class MatriculaController {
     public List<MatriculaResponseDTO> listarReprovados(@PathVariable Long disciplinaId) {
         return matriculaService.listarReprovadosPorDisciplina(disciplinaId);
     }
+
+    @GetMapping("/disciplina/{disciplinaId}")
+    public List<MatriculaResponseDTO> listarAlunosPorDisciplina(@PathVariable Long disciplinaId) {
+        return matriculaService.listarPorDisciplina(disciplinaId);
+    }
+
+    @GetMapping("/aluno/{alunoId}")
+    public List<MatriculaResponseDTO> listarDisciplinasPorAluno(@PathVariable Long alunoId) {
+        return matriculaService.listarPorAluno(alunoId);
+    }
+
+    @GetMapping
+    public List<MatriculaResponseDTO> listarTodas() {
+        return matriculaService.listarTodas();
+    }
 }

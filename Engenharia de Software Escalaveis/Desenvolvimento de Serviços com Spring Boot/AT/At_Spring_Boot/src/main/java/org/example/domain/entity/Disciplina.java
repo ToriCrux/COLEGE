@@ -19,4 +19,8 @@ public class Disciplina {
     @NotBlank
     @Column(unique = true)
     private String codigo;
+
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
 }

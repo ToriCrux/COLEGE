@@ -1,7 +1,8 @@
-package org.example.application.service;
+package application.service;
 
 import org.example.api.dto.matricula.MatriculaRequestDTO;
 import org.example.api.dto.matricula.MatriculaResponseDTO;
+import org.example.application.service.MatriculaService;
 import org.example.domain.entity.Aluno;
 import org.example.domain.entity.Disciplina;
 import org.example.domain.entity.Matricula;
@@ -11,6 +12,7 @@ import org.example.repository.MatriculaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 class MatriculaServiceTest {
 
     @Mock

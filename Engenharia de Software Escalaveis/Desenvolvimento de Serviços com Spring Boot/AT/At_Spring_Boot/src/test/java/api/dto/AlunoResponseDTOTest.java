@@ -3,9 +3,11 @@ package api.dto;
 import org.example.api.dto.aluno.AlunoResponseDTO;
 import org.example.domain.valueobject.Endereco;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 class AlunoResponseDTOTest {
 
     @Test

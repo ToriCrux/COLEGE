@@ -14,4 +14,6 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
     List<Matricula> findByDisciplinaIdAndNotaLessThan(Long disciplinaId, Double nota);
 
     boolean existsByAlunoIdAndDisciplinaId(Long alunoId, Long disciplinaId);
+
+    List<Matricula> findByAlunoId(Long alunoId);
 }

@@ -10,4 +10,5 @@ public class MatriculaResponseDTO {
     private String alunoNome;
     private Long disciplinaId;
     private String disciplinaNome;
+    private Double nota;
 }

@@ -27,4 +27,9 @@ public class DisciplinaController {
     public List<DisciplinaResponseDTO> listarTodos() {
         return disciplinaService.listarTodos();
     }
+
+    @PutMapping("/{id}")
+    public DisciplinaResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody DisciplinaRequestDTO dto) {
+        return disciplinaService.atualizar(id, dto);
+    }
 }

@@ -3,9 +3,11 @@ package security;
 import org.example.security.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 class JwtUtilTest {
 
     private JwtUtil jwtUtil;

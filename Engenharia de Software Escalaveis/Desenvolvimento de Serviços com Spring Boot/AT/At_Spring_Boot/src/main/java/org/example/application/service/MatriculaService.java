@@ -28,7 +28,6 @@ public class MatriculaService {
         Disciplina disciplina = disciplinaRepository.findById(dto.getDisciplinaId())
                 .orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
 
-        // ✅ Verifica diretamente no banco se já existe matrícula com esse aluno e disciplina
         if (matriculaRepository.existsByAlunoIdAndDisciplinaId(aluno.getId(), disciplina.getId())) {
             throw new IllegalArgumentException("Este aluno já está matriculado nesta disciplina");
         }
@@ -36,17 +35,12 @@ public class MatriculaService {
         Matricula matricula = Matricula.builder()
                 .aluno(aluno)
                 .disciplina(disciplina)
+                .nota(null)
                 .build();
 
         Matricula salva = matriculaRepository.save(matricula);
 
-        return MatriculaResponseDTO.builder()
-                .id(salva.getId())
-                .alunoId(aluno.getId())
-                .alunoNome(aluno.getNome())
-                .disciplinaId(disciplina.getId())
-                .disciplinaNome(disciplina.getNome())
-                .build();
+        return toDTO(salva);
     }
 
     public MatriculaResponseDTO atribuirNota(Long matriculaId, Double nota) {
@@ -56,38 +50,42 @@ public class MatriculaService {
         matricula.setNota(nota);
         Matricula atualizada = matriculaRepository.save(matricula);
 
-        return MatriculaResponseDTO.builder()
-                .id(atualizada.getId())
-                .alunoId(atualizada.getAluno().getId())
-                .alunoNome(atualizada.getAluno().getNome())
-                .disciplinaId(atualizada.getDisciplina().getId())
-                .disciplinaNome(atualizada.getDisciplina().getNome())
-                .build();
+        return toDTO(atualizada);
     }
 
     public List<MatriculaResponseDTO> listarAprovadosPorDisciplina(Long disciplinaId) {
         return matriculaRepository.findByDisciplinaIdAndNotaGreaterThanEqual(disciplinaId, 7.0)
-                .stream()
-                .map(m -> MatriculaResponseDTO.builder()
-                        .id(m.getId())
-                        .alunoId(m.getAluno().getId())
-                        .alunoNome(m.getAluno().getNome())
-                        .disciplinaId(m.getDisciplina().getId())
-                        .disciplinaNome(m.getDisciplina().getNome())
-                        .build())
-                .toList();
+                .stream().map(this::toDTO).toList();
     }
 
     public List<MatriculaResponseDTO> listarReprovadosPorDisciplina(Long disciplinaId) {
         return matriculaRepository.findByDisciplinaIdAndNotaLessThan(disciplinaId, 7.0)
-                .stream()
-                .map(m -> MatriculaResponseDTO.builder()
-                        .id(m.getId())
-                        .alunoId(m.getAluno().getId())
-                        .alunoNome(m.getAluno().getNome())
-                        .disciplinaId(m.getDisciplina().getId())
-                        .disciplinaNome(m.getDisciplina().getNome())
-                        .build())
-                .toList();
+                .stream().map(this::toDTO).toList();
+    }
+
+    public List<MatriculaResponseDTO> listarPorDisciplina(Long disciplinaId) {
+        return matriculaRepository.findByDisciplinaId(disciplinaId)
+                .stream().map(this::toDTO).toList();
+    }
+
+    public List<MatriculaResponseDTO> listarPorAluno(Long alunoId) {
+        return matriculaRepository.findByAlunoId(alunoId)
+                .stream().map(this::toDTO).toList();
+    }
+
+    public List<MatriculaResponseDTO> listarTodas() {
+        return matriculaRepository.findAll()
+                .stream().map(this::toDTO).toList();
+    }
+
+    private MatriculaResponseDTO toDTO(Matricula m) {
+        return MatriculaResponseDTO.builder()
+                .id(m.getId())
+                .alunoId(m.getAluno().getId())
+                .alunoNome(m.getAluno().getNome())
+                .disciplinaId(m.getDisciplina().getId())
+                .disciplinaNome(m.getDisciplina().getNome())
+                .nota(m.getNota())
+                .build();
     }
 }

@@ -2,9 +2,11 @@ package domain.entity;
 
 import org.example.domain.entity.Disciplina;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 class DisciplinaTest {
 
     @Test
