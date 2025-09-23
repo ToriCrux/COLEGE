@@ -1,0 +1,50 @@
+name: at-spring-boot
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - '.github/workflows/build-at-spring-boot.yml'
+      - 'Engenharia de Software Escalaveis/Desenvolvimento de Serviços com Spring Boot/AT/At_Spring_Boot/**'
+  pull_request:
+    branches: ["main"]
+    paths:
+      - 'Engenharia de Software Escalaveis/Desenvolvimento de Serviços com Spring Boot/AT/At_Spring_Boot/**'
+
+jobs:
+  build:
+    name: Build & Test (Maven)
+    runs-on: ubuntu-latest
+    environment:
+      name: at-spring-boot
+
+    defaults:
+      run:
+        working-directory: 'Engenharia de Software Escalaveis/Desenvolvimento de Serviços com Spring Boot/AT/At_Spring_Boot'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 21 (Temurin) + cache Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build + Tests + JaCoCo
+        run: mvn -B -ntp clean verify jacoco:report
+
+      - name: Upload JAR (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: at-spring-boot-jar
+          path: target/*.jar
+
+      - name: Upload JaCoCo HTML report (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco
