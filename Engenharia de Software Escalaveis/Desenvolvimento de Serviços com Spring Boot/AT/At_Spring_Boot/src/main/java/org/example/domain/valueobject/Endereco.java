@@ -1,6 +1,5 @@
 package org.example.domain.valueobject;
 
-import jakarta.persistence.Embeddable;
 import lombok.*;
 
 @Getter
@@ -8,7 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Embeddable
 public class Endereco {
 
     private String rua;

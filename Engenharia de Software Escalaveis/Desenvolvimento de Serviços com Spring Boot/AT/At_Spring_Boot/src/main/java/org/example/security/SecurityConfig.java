@@ -34,10 +34,9 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/h2-console/**", "/api/matriculas", "/api/matriculas/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/**").permitAll()
+                        .anyRequest().permitAll()
                 )
-                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -58,7 +57,7 @@ public class SecurityConfig {
 
             String path = request.getServletPath();
 
-            if (path.startsWith("/api/auth/") || path.startsWith("/h2-console")) {
+            if (path.startsWith("/api/auth/") || path.startsWith("/api/")) {
                 filterChain.doFilter(request, response);
                 return;
             }

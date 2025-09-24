@@ -27,4 +27,3 @@ class SecurityConfigTest {
                 .andExpect(status().isForbidden());
     }
 }
-

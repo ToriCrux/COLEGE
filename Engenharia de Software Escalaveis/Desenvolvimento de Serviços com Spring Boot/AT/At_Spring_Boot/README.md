@@ -1,76 +1,141 @@
 # API Acadêmica
 
-Este projeto é uma API construída como parte de um assessment da faculdade, utilizando Spring Boot.
-Ela tem como objetivo gerenciar alunos, professores, disciplinas e matrículas.
+Este projeto é uma API construída como parte de um assessment da faculdade, utilizando **Spring Boot**.  
+O objetivo é gerenciar **alunos, professores, disciplinas e matrículas**, simulando um ambiente acadêmico real.
+
+Atualmente, a aplicação está disponível em produção através de uma **VPS na Hostinger**, utilizando **Docker** para orquestração e o banco de dados **MongoDB** para armazenamento das informações.
+
+---
 
 ## Funcionalidades
 
-- Cadastro e listagem de alunos
-- Cadastro e listagem de disciplinas
-- Cadastro e listagem de matrículas
-- Autenticação de professores com JWT
+- Cadastro e listagem de **professores** (com autenticação via JWT)
+- Cadastro e listagem de **alunos**
+- Cadastro e listagem de **disciplinas**
+- Cadastro e listagem de **matrículas**
+- Atualização de **notas**
+- Consultas específicas de **aprovados** e **reprovados**
+
+---
 
 ## Banco de Dados
 
-O projeto utiliza banco de dados relacional (PostgreSQL ou H2 para testes).
-Configuração no application.properties:
+- Banco utilizado em produção: **MongoDB**
+- Gerenciado via container **Docker**
+- A configuração local pode ser adaptada no `application.properties`
 
-- spring.datasource.url= jdbc:postgresql://localhost:5432/academico
-- spring.datasource.username= academico_user
-- spring.datasource.password= academico_pass
+---
 
-→ Para ambiente de testes, o H2 é usado automaticamente. 
-<br>Acesse o console em: http://localhost:8080/h2-console
+## Endpoints da API
 
-## Testando no Postman
+A API está rodando em:  
+`https://victoria-cruz-at-springboot-academico-api.ksexdv.easypanel.host`
 
-### 1- Autenticar professor
-
-POST http://localhost:8080/api/auth/login
-
-Body (JSON):
-```bash
+### Autenticação
+- **POST** `/api/auth/register` → Registra professor
+```json
 {
-  "email": "joao.silva@example.com",
-  "senha": "12345"
+  "email": "professor@example.com",
+  "senha": "123456"
 }
 ```
-Resposta → retorna um token JWT. 
 
-E o caso acima é um exemplo já existente, mas é possível criar um novo cadastro de professor, seguindo exemplo abaixo:
-
-POST http://localhost:8080/api/auth/register
-
-```bash
+- **POST** `/api/auth/login` → Login de professor (retorna JWT)
+```json
 {
-  "email": "seu_email@example.com",
-  "senha": "sua_senha"
+  "email": "professor@example.com",
+  "senha": "123456"
 }
 ```
-### 2- Usar o token nas requisições
 
-Adicione no Postman em Headers. Authorization: Bearer Token SEU_TOKEN
-![img.png](img.png)
+---
 
-### 3- Exemplos de outros endpoints
+### Alunos
 
-- POST /api/alunos → Cadastrar aluno
-- GET /api/alunos → Listar alunos
-- POST /api/disciplinas → Cadastrar disciplina
-- GET /api/disciplinas → Listar disciplinas
-- POST /api/matriculas → Realizar matrícula
-- GET /api/matriculas → Visualizar todos os alunos matrículados
-
-
-### 4- Testes Automatizados
-
-O projeto conta com testes unitários e de integração, com cobertura acima de 75% no Jacoco.
-
-Para rodar:
-```bash
-
- mvn test
- mvn jacoco:report
+- **POST** `/api/alunos` → Cadastra Aluno
+- **GET** `/api/alunos` → Lista Aluno
+```json
+{
+  "nome": "Maria Silva",
+  "cpf": "12345678900",
+  "email": "maria@example.com",
+  "telefone": "11999999999",
+  "endereco": {
+    "rua": "Rua Teste",
+    "numero": "100",
+    "bairro": "Centro",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "12345000"
+  }
+}
 ```
 
-Relatório disponível em → target/site/jacoco/index.html
+---
+
+### Disciplinas
+
+- **POST** `/api/disciplinas` → Cadastra Disciplinas
+- **GET** `/api/disciplinas` → Lista Disciplinas
+```json
+{
+    "nome": "Design de Software",
+    "codigo": "DS101",
+    "professor_id": "68d31a95fdcba259fd6c582a"
+}
+```
+
+---
+
+### Matriculas
+
+- **POST** `/api/matriculas` → Matricula aluno em disciplina
+
+```json
+{
+  "alunoId": "68d31cbbfdcba259fd6c582c",
+  "disciplinaId": "68d31e3bfdcba259fd6c582f"
+}
+```
+
+
+- **GET** `/api/matriculas` → Lista todas as matrículas
+- **PATCH** `/api/matriculas/{id}/nota` → Atribui nota
+```json
+{
+  "nota": 8.5
+}
+```
+
+---
+
+### Consultas Específicas
+
+- GET /api/matriculas/aprovados → Lista todos os alunos aprovados
+- GET /api/matriculas/reprovados → Lista todos os alunos reprovados
+- GET /api/matriculas/disciplina/{disciplinaId}/aprovados → Lista aprovados de uma disciplina
+- GET /api/matriculas/disciplina/{disciplinaId}/reprovados → Lista reprovados de uma disciplina
+- GET /api/matriculas/aluno/{alunoId} → Lista notas de um aluno específico
+
+---
+
+### Testes Automatizados
+
+O projeto conta com testes unitários e de integração, com cobertura de código medida pelo JaCoCo.
+
+Para rodar localmente:
+```bash
+mvn test
+mvn jacoco:report
+```
+
+Relatório disponível em: btarget/site/jacoco/index.html
+
+---
+
+### Deploy
+
+- Empacotamento do projeto com Maven (mvn clean package -DskipTests)
+- Arquivo .jar incluído em uma imagem Docker via Dockerfile
+- Container executado em VPS Hostinger, junto com MongoDB
+- API publicada e disponível para consumo externo

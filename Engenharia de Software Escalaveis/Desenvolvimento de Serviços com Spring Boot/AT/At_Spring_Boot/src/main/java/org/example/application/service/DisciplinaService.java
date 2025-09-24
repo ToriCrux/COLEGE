@@ -57,7 +57,7 @@ public class DisciplinaService {
                 .toList();
     }
 
-    public DisciplinaResponseDTO atualizar(Long id, DisciplinaRequestDTO dto) {
+    public DisciplinaResponseDTO atualizar(String id, DisciplinaRequestDTO dto) {
         Disciplina disciplina = disciplinaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
 

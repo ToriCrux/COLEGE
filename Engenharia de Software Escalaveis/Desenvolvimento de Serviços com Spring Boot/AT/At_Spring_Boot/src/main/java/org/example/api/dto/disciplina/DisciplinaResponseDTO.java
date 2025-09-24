@@ -9,8 +9,8 @@ import lombok.*;
 @Builder
 public class DisciplinaResponseDTO {
 
-    private Long id;
+    private String id;
     private String nome;
     private String codigo;
-    private Long professor_id;
+    private String professor_id;
 }

@@ -16,5 +16,5 @@ public class DisciplinaRequestDTO {
     @NotBlank
     private String codigo;
 
-    private Long professor_id;
+    private String professor_id;
 }

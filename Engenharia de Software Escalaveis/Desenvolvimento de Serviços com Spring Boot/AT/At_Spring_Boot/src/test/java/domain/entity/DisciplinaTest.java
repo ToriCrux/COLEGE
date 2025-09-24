@@ -12,14 +12,13 @@ class DisciplinaTest {
     @Test
     void deveCriarDisciplinaEValidarGettersSetters() {
         Disciplina d = new Disciplina();
-        d.setId(1L);
+        d.setId("1");
         d.setNome("Matemática");
         d.setCodigo("MAT01");
 
-        assertEquals(1L, d.getId());
+        assertEquals("1", d.getId());
         assertEquals("Matemática", d.getNome());
         assertEquals("MAT01", d.getCodigo());
         assertNotNull(d.toString());
     }
-
 }

@@ -4,7 +4,11 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import org.example.domain.valueobject.Endereco;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AlunoRequestDTO {
 
     @NotBlank
@@ -13,7 +17,8 @@ public class AlunoRequestDTO {
     @NotBlank
     private String cpf;
 
-    @Email @NotBlank
+    @Email
+    @NotBlank
     private String email;
 
     @NotBlank

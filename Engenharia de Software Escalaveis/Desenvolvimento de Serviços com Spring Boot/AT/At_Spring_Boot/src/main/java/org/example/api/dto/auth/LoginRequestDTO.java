@@ -3,7 +3,8 @@ package org.example.api.dto.auth;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class LoginRequestDTO {
     private String email;
     private String senha;

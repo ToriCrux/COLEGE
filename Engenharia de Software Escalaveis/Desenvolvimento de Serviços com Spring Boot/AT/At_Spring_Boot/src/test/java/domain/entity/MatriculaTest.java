@@ -12,12 +12,11 @@ class MatriculaTest {
     @Test
     void deveCriarMatriculaEValidarGettersSetters() {
         Matricula m = new Matricula();
-        m.setId(1L);
+        m.setId("1");
         m.setNota(9.5);
 
-        assertEquals(1L, m.getId());
+        assertEquals("1", m.getId());
         assertEquals(9.5, m.getNota());
         assertNotNull(m.toString());
     }
 }
-

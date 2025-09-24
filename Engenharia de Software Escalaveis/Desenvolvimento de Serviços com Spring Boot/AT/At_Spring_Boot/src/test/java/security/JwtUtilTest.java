@@ -23,8 +23,8 @@ class JwtUtilTest {
         String token = jwtUtil.gerarToken(email);
 
         assertNotNull(token);
-        String subject = jwtUtil.validarToken(token);
 
+        String subject = jwtUtil.validarToken(token);
         assertEquals(email, subject);
     }
 
@@ -32,9 +32,7 @@ class JwtUtilTest {
     void deveRetornarExceptionParaTokenInvalido() {
         String tokenInvalido = "token.falso";
 
-        assertThrows(Exception.class, () -> {
-            jwtUtil.validarToken(tokenInvalido);
-        });
+        assertThrows(Exception.class, () -> jwtUtil.validarToken(tokenInvalido));
     }
 
     @Test
@@ -44,5 +42,12 @@ class JwtUtilTest {
 
         assertNotEquals(token1, token2);
     }
-}
 
+    @Test
+    void deveExtrairRoleDoToken() {
+        String token = jwtUtil.gerarToken("role@test.com");
+        String role = jwtUtil.extrairRole(token);
+
+        assertEquals("PROFESSOR", role);
+    }
+}

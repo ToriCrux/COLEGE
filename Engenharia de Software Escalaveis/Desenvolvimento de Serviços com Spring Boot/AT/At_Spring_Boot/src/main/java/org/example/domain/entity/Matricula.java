@@ -1,24 +1,25 @@
 package org.example.domain.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-@Entity
-@Table(name = "matriculas",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"aluno_id","disciplina_id"}))
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Document(collection = "matriculas")
 public class Matricula {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "aluno_id")
+    @DBRef
     private Aluno aluno;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "disciplina_id")
+    @DBRef
     private Disciplina disciplina;
 
     private Double nota;

@@ -28,7 +28,7 @@ class ProfessorServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        professor = new Professor(1L, "Professor Teste", "professor@email.com", "123456");
+        professor = new Professor("1", "Professor Teste", "professor@email.com", "123456");
     }
 
     @Test

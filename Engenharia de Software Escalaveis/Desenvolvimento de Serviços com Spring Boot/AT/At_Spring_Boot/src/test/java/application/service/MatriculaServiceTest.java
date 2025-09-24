@@ -39,23 +39,23 @@ class MatriculaServiceTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        aluno = Aluno.builder().id(1L).nome("Maria").build();
-        disciplina = Disciplina.builder().id(1L).nome("Matemática").build();
+        aluno = Aluno.builder().id("1").nome("Maria").build();
+        disciplina = Disciplina.builder().id("1").nome("Matemática").build();
     }
 
     @Test
     void deveMatricularAlunoComSucesso() {
         MatriculaRequestDTO dto = MatriculaRequestDTO.builder()
-                .alunoId(1L)
-                .disciplinaId(1L)
+                .alunoId("1")
+                .disciplinaId("1")
                 .build();
 
-        when(alunoRepository.findById(1L)).thenReturn(Optional.of(aluno));
-        when(disciplinaRepository.findById(1L)).thenReturn(Optional.of(disciplina));
-        when(matriculaRepository.findByDisciplinaId(1L)).thenReturn(List.of());
+        when(alunoRepository.findById("1")).thenReturn(Optional.of(aluno));
+        when(disciplinaRepository.findById("1")).thenReturn(Optional.of(disciplina));
+        when(matriculaRepository.findByDisciplinaId("1")).thenReturn(List.of());
 
         Matricula salva = Matricula.builder()
-                .id(10L)
+                .id("10")
                 .aluno(aluno)
                 .disciplina(disciplina)
                 .build();
@@ -73,15 +73,15 @@ class MatriculaServiceTest {
     @Test
     void deveAtribuirNota() {
         Matricula matricula = Matricula.builder()
-                .id(10L)
+                .id("10")
                 .aluno(aluno)
                 .disciplina(disciplina)
                 .build();
 
-        when(matriculaRepository.findById(10L)).thenReturn(Optional.of(matricula));
+        when(matriculaRepository.findById("10")).thenReturn(Optional.of(matricula));
         when(matriculaRepository.save(any(Matricula.class))).thenReturn(matricula);
 
-        MatriculaResponseDTO response = matriculaService.atribuirNota(10L, 8.5);
+        MatriculaResponseDTO response = matriculaService.atribuirNota("10", 8.5);
 
         assertNotNull(response);
         verify(matriculaRepository).save(matricula);
@@ -91,16 +91,16 @@ class MatriculaServiceTest {
     @Test
     void deveListarAprovadosPorDisciplina() {
         Matricula m = Matricula.builder()
-                .id(1L)
+                .id("1")
                 .aluno(aluno)
                 .disciplina(disciplina)
                 .nota(9.0)
                 .build();
 
-        when(matriculaRepository.findByDisciplinaIdAndNotaGreaterThanEqual(1L, 7.0))
+        when(matriculaRepository.findByDisciplinaIdAndNotaGreaterThanEqual("1", 7.0))
                 .thenReturn(List.of(m));
 
-        var lista = matriculaService.listarAprovadosPorDisciplina(1L);
+        var lista = matriculaService.listarAprovadosPorDisciplina("1");
 
         assertEquals(1, lista.size());
         assertEquals("Maria", lista.get(0).getAlunoNome());
@@ -109,16 +109,16 @@ class MatriculaServiceTest {
     @Test
     void deveListarReprovadosPorDisciplina() {
         Matricula m = Matricula.builder()
-                .id(1L)
+                .id("1")
                 .aluno(aluno)
                 .disciplina(disciplina)
                 .nota(5.0)
                 .build();
 
-        when(matriculaRepository.findByDisciplinaIdAndNotaLessThan(1L, 7.0))
+        when(matriculaRepository.findByDisciplinaIdAndNotaLessThan("1", 7.0))
                 .thenReturn(List.of(m));
 
-        var lista = matriculaService.listarReprovadosPorDisciplina(1L);
+        var lista = matriculaService.listarReprovadosPorDisciplina("1");
 
         assertEquals(1, lista.size());
         assertEquals("Maria", lista.get(0).getAlunoNome());

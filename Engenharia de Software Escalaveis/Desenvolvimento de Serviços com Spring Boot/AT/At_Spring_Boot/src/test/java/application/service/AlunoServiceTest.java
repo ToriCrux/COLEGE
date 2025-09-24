@@ -42,7 +42,7 @@ class AlunoServiceTest {
         when(alunoRepository.existsByCpf(dto.getCpf())).thenReturn(false);
 
         Aluno salvo = Aluno.builder()
-                .id(1L)
+                .id("1")
                 .nome(dto.getNome())
                 .cpf(dto.getCpf())
                 .email(dto.getEmail())
@@ -62,7 +62,7 @@ class AlunoServiceTest {
     @Test
     void deveListarTodosOsAlunos() {
         Aluno aluno = Aluno.builder()
-                .id(1L)
+                .id("1")
                 .nome("João")
                 .cpf("98765432100")
                 .email("joao@email.com")

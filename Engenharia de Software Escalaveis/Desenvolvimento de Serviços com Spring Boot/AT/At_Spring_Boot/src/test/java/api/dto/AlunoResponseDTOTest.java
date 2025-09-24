@@ -13,14 +13,14 @@ class AlunoResponseDTOTest {
     @Test
     void deveCriarAlunoResponseDTOComSetters() {
         AlunoResponseDTO dto = new AlunoResponseDTO();
-        dto.setId(1L);
+        dto.setId("1");
         dto.setNome("João");
         dto.setEmail("joao@email.com");
         dto.setCpf("12345678900");
         dto.setTelefone("999999999");
         dto.setEndereco(new Endereco("Rua A", "100", "Centro", "CidadeX", "SP", "12345000"));
 
-        assertEquals(1L, dto.getId());
+        assertEquals("1", dto.getId());
         assertEquals("João", dto.getNome());
         assertEquals("joao@email.com", dto.getEmail());
         assertEquals("12345678900", dto.getCpf());

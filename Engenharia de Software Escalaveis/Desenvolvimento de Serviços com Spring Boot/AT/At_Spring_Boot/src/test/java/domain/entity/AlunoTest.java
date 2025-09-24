@@ -15,14 +15,14 @@ class AlunoTest {
         Endereco endereco = new Endereco("Rua A", "100", "Centro", "CidadeX", "SP", "12345000");
 
         Aluno aluno = new Aluno();
-        aluno.setId(1L);
+        aluno.setId("1");
         aluno.setNome("João");
         aluno.setEmail("joao@email.com");
         aluno.setCpf("12345678900");
         aluno.setTelefone("999999999");
         aluno.setEndereco(endereco);
 
-        assertEquals(1L, aluno.getId());
+        assertEquals("1", aluno.getId());
         assertEquals("João", aluno.getNome());
         assertEquals("joao@email.com", aluno.getEmail());
         assertEquals("12345678900", aluno.getCpf());
@@ -31,4 +31,3 @@ class AlunoTest {
         assertNotNull(aluno.toString());
     }
 }
-

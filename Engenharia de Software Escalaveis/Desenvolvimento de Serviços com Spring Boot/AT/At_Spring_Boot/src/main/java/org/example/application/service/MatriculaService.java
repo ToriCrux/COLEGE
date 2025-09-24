@@ -1,6 +1,7 @@
 package org.example.application.service;
 
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.example.api.dto.matricula.MatriculaRequestDTO;
 import org.example.api.dto.matricula.MatriculaResponseDTO;
 import org.example.domain.entity.Aluno;
@@ -43,9 +44,11 @@ public class MatriculaService {
         return toDTO(salva);
     }
 
-    public MatriculaResponseDTO atribuirNota(Long matriculaId, Double nota) {
+    public MatriculaResponseDTO atribuirNota(String matriculaId, Double nota) {
+        // Garantir que o ID é tratado corretamente mesmo como ObjectId
         Matricula matricula = matriculaRepository.findById(matriculaId)
-                .orElseThrow(() -> new IllegalArgumentException("Matrícula não encontrada"));
+                .orElseGet(() -> matriculaRepository.findById(new ObjectId(matriculaId).toHexString())
+                        .orElseThrow(() -> new IllegalArgumentException("Matrícula não encontrada")));
 
         matricula.setNota(nota);
         Matricula atualizada = matriculaRepository.save(matricula);
@@ -53,28 +56,38 @@ public class MatriculaService {
         return toDTO(atualizada);
     }
 
-    public List<MatriculaResponseDTO> listarAprovadosPorDisciplina(Long disciplinaId) {
+    public List<MatriculaResponseDTO> listarAprovadosPorDisciplina(String disciplinaId) {
         return matriculaRepository.findByDisciplinaIdAndNotaGreaterThanEqual(disciplinaId, 7.0)
                 .stream().map(this::toDTO).toList();
     }
 
-    public List<MatriculaResponseDTO> listarReprovadosPorDisciplina(Long disciplinaId) {
+    public List<MatriculaResponseDTO> listarReprovadosPorDisciplina(String disciplinaId) {
         return matriculaRepository.findByDisciplinaIdAndNotaLessThan(disciplinaId, 7.0)
                 .stream().map(this::toDTO).toList();
     }
 
-    public List<MatriculaResponseDTO> listarPorDisciplina(Long disciplinaId) {
+    public List<MatriculaResponseDTO> listarPorDisciplina(String disciplinaId) {
         return matriculaRepository.findByDisciplinaId(disciplinaId)
                 .stream().map(this::toDTO).toList();
     }
 
-    public List<MatriculaResponseDTO> listarPorAluno(Long alunoId) {
+    public List<MatriculaResponseDTO> listarPorAluno(String alunoId) {
         return matriculaRepository.findByAlunoId(alunoId)
                 .stream().map(this::toDTO).toList();
     }
 
     public List<MatriculaResponseDTO> listarTodas() {
         return matriculaRepository.findAll()
+                .stream().map(this::toDTO).toList();
+    }
+
+    public List<MatriculaResponseDTO> listarAprovados() {
+        return matriculaRepository.findByNotaGreaterThanEqual(7.0)
+                .stream().map(this::toDTO).toList();
+    }
+
+    public List<MatriculaResponseDTO> listarReprovados() {
+        return matriculaRepository.findByNotaLessThan(7.0)
                 .stream().map(this::toDTO).toList();
     }
 

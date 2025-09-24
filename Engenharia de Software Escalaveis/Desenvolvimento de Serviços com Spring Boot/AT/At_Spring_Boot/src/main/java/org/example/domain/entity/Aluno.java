@@ -1,25 +1,28 @@
 package org.example.domain.entity;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.example.domain.valueobject.Endereco;
 import lombok.*;
+import org.example.domain.valueobject.Endereco;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Embeddable
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-@Entity
-@Table(name = "alunos")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Document(collection = "alunos")
 public class Aluno {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotBlank
     private String nome;
 
     @NotBlank
-    @Column(unique = true)
+    @Indexed(unique = true)
     private String cpf;
 
     @Email
@@ -29,6 +32,5 @@ public class Aluno {
     @NotBlank
     private String telefone;
 
-    @Embedded
     private Endereco endereco;
 }

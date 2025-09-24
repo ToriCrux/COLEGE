@@ -38,7 +38,7 @@ class DisciplinaServiceTest {
         when(disciplinaRepository.existsByCodigo(dto.getCodigo())).thenReturn(false);
 
         Disciplina salva = Disciplina.builder()
-                .id(1L)
+                .id("1")
                 .nome(dto.getNome())
                 .codigo(dto.getCodigo())
                 .build();
@@ -55,7 +55,7 @@ class DisciplinaServiceTest {
     @Test
     void deveListarTodasAsDisciplinas() {
         Disciplina disciplina = Disciplina.builder()
-                .id(1L)
+                .id("1")
                 .nome("Português")
                 .codigo("PORT01")
                 .build();

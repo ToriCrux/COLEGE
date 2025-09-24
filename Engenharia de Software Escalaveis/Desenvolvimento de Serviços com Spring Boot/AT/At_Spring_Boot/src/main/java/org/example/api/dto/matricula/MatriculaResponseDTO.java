@@ -2,13 +2,17 @@ package org.example.api.dto.matricula;
 
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MatriculaResponseDTO {
 
-    private Long id;
-    private Long alunoId;
+    private String id;
+    private String alunoId;
     private String alunoNome;
-    private Long disciplinaId;
+    private String disciplinaId;
     private String disciplinaNome;
     private Double nota;
 }
