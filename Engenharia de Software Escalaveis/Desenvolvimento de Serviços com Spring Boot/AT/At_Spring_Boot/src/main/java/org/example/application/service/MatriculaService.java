@@ -45,7 +45,6 @@ public class MatriculaService {
     }
 
     public MatriculaResponseDTO atribuirNota(String matriculaId, Double nota) {
-        // Garantir que o ID é tratado corretamente mesmo como ObjectId
         Matricula matricula = matriculaRepository.findById(matriculaId)
                 .orElseGet(() -> matriculaRepository.findById(new ObjectId(matriculaId).toHexString())
                         .orElseThrow(() -> new IllegalArgumentException("Matrícula não encontrada")));
