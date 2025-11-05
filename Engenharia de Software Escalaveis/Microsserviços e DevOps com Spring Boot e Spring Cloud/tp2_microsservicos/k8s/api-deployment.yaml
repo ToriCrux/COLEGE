@@ -18,7 +18,6 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            # Config padrão do Spring (mais direto, não depende de código lendo DB_*):
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql:3306/appdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf8
             - name: SPRING_DATASOURCE_USERNAME

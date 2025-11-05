@@ -17,7 +17,6 @@ spec:
         - name: mysql
           image: toricruz/mysql-local:1.0
           imagePullPolicy: IfNotPresent
-          # força o mysqld a bindar em todas as interfaces
           command: ["mysqld"]
           args:
             - "--bind-address=0.0.0.0"
@@ -48,7 +47,6 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-            # (opcional, mantém o override via ConfigMap também)
             - name: mysql-config
               mountPath: /etc/mysql/conf.d/zzz-docker.cnf
               subPath: my.cnf
