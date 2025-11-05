@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tp2-api
+  namespace: tp2
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: tp2-api }
+  template:
+    metadata:
+      labels: { app: tp2-api }
+    spec:
+      containers:
+        - name: tp2-api
+          image: toricruz/tp2-api:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            # Config padrão do Spring (mais direto, não depende de código lendo DB_*):
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql:3306/appdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom: { secretKeyRef: { name: mysql-secret, key: MYSQL_USER } }
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom: { secretKeyRef: { name: mysql-secret, key: MYSQL_PASSWORD } }
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "none"      # (ou "update" se preferir)
